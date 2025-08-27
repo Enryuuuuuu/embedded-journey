@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdint.h>
 
-void main(){
+int main(){
     //print sizes of data types
     printf("Size of int: %d bytes\n", sizeof(int));
     printf("Size of long: %zu bytes\n", sizeof(long));
@@ -30,4 +30,7 @@ void main(){
     printf("Value after adding another 1 (overflow): %u\n", overflowtest);
     overflowtest += 1;
     printf("Value after adding yet another 1: %u\n", overflowtest);
+    
+    return 0;
+
 }
