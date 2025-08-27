@@ -1,22 +1,22 @@
 ambiguity of size of integer in C language
 
-every different data type has a different memory size, such as integer use 4-8bytes of memory char use 1byte memory
+Every data type has a different memory size. For example, an integer uses 4-8 bytes of memory, while a char uses 1 byte.
 
-if we use a general int data type in C language such as int for your embedded system it might be cause a problem, because general int in C have a uncertian size. the size of general int in C depend on "natural word size". natural word size is a size of data that computer can proses data in that size with the most eficient way. for example:
+Using a general-purpose data type like int in an embedded system can cause problems, because the int type has an uncertain size in C. the size of a standard int in C depends on the processor's 'natural word size'. The natural word size is the amount of data that a CPU can process most efficiently in a single operation. for example:
 
-- in the old 16bit microcontroller int is only 2 bytes in size. 2 bytes is come from 16bit, that we know 1 byte is 8 bit, so 16 bit is equal to 2 bytes
-- in newest 32bit microcontroller int is 4 bytes in size. 4 bytes is come from 32bit, that we know 1 byte is 8 bit, so 32 bit is equal to 4 bytes
+- in the old 16bit microcontroller int is only 2 bytes in size. 2 bytes is comes from 16bit, that we know 1 byte is 8 bit, so 16 bit is equal to 2 bytes
+- in newest 32bit microcontroller int is 4 bytes in size. 4 bytes is comes from 32bit, that we know 1 byte is 8 bit, so 32 bit is equal to 4 bytes
 
-this inconsistency of int size is not a weakness of c language. this was created on purpose to make c language code fast in every devices.
+This inconsistency is not a weakness of the C language; it was created intentionally to make C code performant on any device.
 
-to handle this, we can use a stdint.h header. this header file provide a several type of data integer that consisten in size no matter how much natural word size of our device.
+to handle this, we can use a stdint.h header. This header file provides several integer data types that are consistent in size no matter how much natural word size of our device.
 
 ==================================================================
 How to print sizeof
 
 %z is usually used with another specifier like d or u --> %zd or %zu.
 
-the function of %z is for show value of size_t data type
+The purpose of the %z format specifier is to display the value of a size_t data type.
 
 size_t data type is a unsigned integer in c language that used for define object size(result from sizeof operator)
 
@@ -24,4 +24,5 @@ size_t data type is a unsigned integer in c language that used for define object
 variable overflow
 
 we know that value of 8 bit unsigned integer is in range 0 until 255.
-if we have a unsigned 8 bit integer, that we fill that variabel with 255. and then we add that varaible with 2, the result of addition wont be 257, but it will back to 0 after the value is bigger than 255, so the result of addition will be 1.
+
+If we have an unsigned 8-bit integer (uint8_t) with a value of 255 and add 2 to it, the result won't be 257. Instead, because the value has exceeded the maximum limit, it wraps back around to 0, and the final result will be 1.
