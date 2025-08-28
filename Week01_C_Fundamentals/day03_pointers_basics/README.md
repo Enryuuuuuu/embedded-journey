@@ -11,6 +11,7 @@ pretest
 3. Rencana Anda menyebutkan bahwa menginisialisasi pointer ke NULL adalah praktik yang baik. Menurut Anda, mengapa ini penting? Bahaya apa yang coba kita hindari?
    Jawaban 3: "karena pointer berisi alamat suatu variabel jika kita salah memasukan nilai bisa jadi kita salah mengakses suatu alamat. dengan mengisikan null kita menghindari supaya pointer diberi nilai yang tidak jelas oleh kompiler"
    Evaluasi: Sangat Tepat. Penjelasan Anda luar biasa. Pointer yang tidak diinisialisasi (disebut juga wild pointer) akan berisi alamat "sampah" yang acak. Mencoba mengakses atau menulis ke alamat acak tersebut adalah salah satu bug paling berbahaya dalam C. Dengan menginisialisasi ke NULL, kita memberinya nilai yang aman dan kita bisa dengan mudah memeriksa (if (pointer != NULL)) apakah pointer tersebut sudah menunjuk ke alamat yang valid sebelum digunakan.
+
    ==========================================
 
 pointer harus memiliki type data, karena pointer behubungan dengan memori. jika pointer tidak mengetahui tipe data dari alamat yang dibaca maka pointer tidak akan tahu berapa block memori yang harus dibaca
