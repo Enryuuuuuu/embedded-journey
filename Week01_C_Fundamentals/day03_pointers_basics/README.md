@@ -53,4 +53,4 @@ percobaan const pada pointer
 trik untuk membaca deklarasi ini adalah dengan membacanya dari kanan ke kiri:
 
 - int _ const p_nilai; -> p_nilai adalah const (konstan) _ (pointer) ke int. Jadi, pointernya yang konstan.
-- # const int _ p_nilai; -> p_nilai adalah _ (pointer) ke int yang const (konstan). Jadi, integernya yang konstan.
+- const int _ p_nilai; -> p_nilai adalah _ (pointer) ke int yang const (konstan). Jadi, integernya yang konstan.
