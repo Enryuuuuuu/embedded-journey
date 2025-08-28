@@ -26,3 +26,39 @@ variable overflow
 we know that value of 8 bit unsigned integer is in range 0 until 255.
 
 If we have an unsigned 8-bit integer (uint8_t) with a value of 255 and add 2 to it, the result won't be 257. Instead, because the value has exceeded the maximum limit, it wraps back around to 0, and the final result will be 1.
+
+==================================================================
+Struct and Struct padding
+
+struct is a data type that allow you to make a group that consist of various type and size of data. for example
+
+struct weather_packet2 {
+uint8_t packet_id;
+float temperature_celsius;
+uint16_t humidity_percent;
+uint32_t pressure_pascals;
+};
+
+that stuct is consist of a several data size and type like uint8_t,float, uint16_t, and uint32_t. to use struct first we should make the format for out struct. we should define what our struct consist of. next we should make variable using our struct as the data type:
+
+struct weather_packet2 sensor2;
+
+in that code we are making a variable named sensor2 that have data type weather_packet2.
+
+to access the content of the struct we use dot operator (.):
+
+sensor2.packet_id
+
+the content of weather_packet2 data type have a various size of memory like uint8_t has 1 bytes, float has 4 bytes etc. if we count the sum of
+the content of weather_packet2 data type have a various size of memory like uint8_t has 1 bytes, float has 4 bytes etc. if we count the sum of the sizes of the individual members of the struct weather_packet2 you will find thatThe sum of the parts is 11 bytes. but in fact the actual size of the struct is 16 bytes because something called padding. here is the detail about that.
+
+// Address | Member | Size | Comment
+//---------|-----------------------|---------|------------------------------------
+// 0 | packet_id | 2 bytes | OK. Starts at 0.
+// 2 | <--- PADDING ---> | 2 bytes | Compiler adds this to align the next member.
+// 4 | temperature_celsius | 4 bytes | Now starts at address 4 (a multiple of 4).
+// 8 | humidity_percent | 1 byte | OK. Starts at 8.
+// 9 | <--- PADDING ---> | 3 bytes | Compiler adds this to align the next member.
+// 12 | pressure_pascals | 4 bytes | Now starts at address 12 (a multiple of 4).
+//---------|-----------------------|---------|------------------------------------
+// TOTAL SIZE = 16 bytes
