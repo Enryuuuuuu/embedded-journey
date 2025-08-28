@@ -1,4 +1,4 @@
-## pretest
+pretest
 
 1. Jika Anda memiliki int var = 42; dan kemudian Anda menulis int _p_var = &var;. Apa tipe data dari p_var dan apa nilai yang disimpannya?
    Jawaban 1: "tipenya int dan nilai yang disimpan adalah alamat dari var"
