@@ -11,6 +11,9 @@
 3. Rencana Anda menyebutkan bahwa menginisialisasi pointer ke NULL adalah praktik yang baik. Menurut Anda, mengapa ini penting? Bahaya apa yang coba kita hindari?
    Jawaban 3: "karena pointer berisi alamat suatu variabel jika kita salah memasukan nilai bisa jadi kita salah mengakses suatu alamat. dengan mengisikan null kita menghindari supaya pointer diberi nilai yang tidak jelas oleh kompiler"
    Evaluasi: Sangat Tepat. Penjelasan Anda luar biasa. Pointer yang tidak diinisialisasi (disebut juga wild pointer) akan berisi alamat "sampah" yang acak. Mencoba mengakses atau menulis ke alamat acak tersebut adalah salah satu bug paling berbahaya dalam C. Dengan menginisialisasi ke NULL, kita memberinya nilai yang aman dan kita bisa dengan mudah memeriksa (if (pointer != NULL)) apakah pointer tersebut sudah menunjuk ke alamat yang valid sebelum digunakan.
+   ==========================================
+
+pointer harus memiliki type data, karena pointer behubungan dengan memori. jika pointer tidak mengetahui tipe data dari alamat yang dibaca maka pointer tidak akan tahu berapa block memori yang harus dibaca
 
 ===========================================
 pass-by-value
@@ -54,3 +57,27 @@ trik untuk membaca deklarasi ini adalah dengan membacanya dari kanan ke kiri:
 
 - int _ const p_nilai; -> p_nilai adalah const (konstan) _ (pointer) ke int. Jadi, pointernya yang konstan.
 - const int _ p_nilai; -> p_nilai adalah _ (pointer) ke int yang const (konstan). Jadi, integernya yang konstan.
+
+==============================================
+pertanyaan pemahaman
+
+1. nter ke Pointer: Jika int \*p; adalah pointer ke sebuah integer, bagaimana cara Anda mendeklarasikan sebuah variabel bernama pp yang merupakan "pointer ke sebuah pointer integer"? Dan bagaimana cara Anda mendapatkan nilai integer asli hanya dengan menggunakan pp?
+   Bayangkan kita memiliki tiga "kotak":
+   nilai (menyimpan angka)
+   p_nilai (menyimpan alamat dari nilai)
+   pp_nilai (menyimpan alamat dari p_nilai)
+
+   int **pp_nilai: Tanda bintang ganda (**) menandakan bahwa ini adalah pointer ke sebuah pointer int.
+   &p_nilai: Kita mengambil alamat dari pointer p_nilai untuk disimpan di dalam pp_nilai.
+   \*pp_nilai: Melakukan dereference sekali akan memberi kita nilai yang disimpan di p_nilai, yaitu alamat dari nilai.
+   \*\*pp_nilai: Melakukan dereference dua kali akan mengikuti rantai alamat tersebut sampai ke variabel asli dan memberi kita nilai dari nilai
+
+2. ran Pointer: Apakah sizeof(int _) akan selalu sama dengan sizeof(char _) pada satu mesin yang sama? Mengapa atau mengapa tidak?
+   ukuran pointer ditentukan oleh arsitektur cpu yaitu lebar bus alamat, jadi jenis data apapun yang ditunjuk pointer rentang memorinya akan sama yaitu rentang memori pada cpu tersebut.
+
+3. tmetika void *: Kita tahu int *p + 1 akan menambahkan 4 byte ke alamat. Apa yang terjadi jika Anda mencoba melakukan void \*vp + 1? Apakah ini diizinkan? Jika tidak, mengapa menurut Anda ini berbahaya?
+   tidak, karena void adalah ketiadaan, membaca alat dari void tanpa casting tipe data akan menyebabkan pointer bingung berapa banyak memori yang dibaca, ini bisa menyebabkan data yang dibaca kurang atau bahkal lebih hingga membaca data milik variabel lain
+
+4. L vs. Karakter NUL: Apakah pointer NULL sama dengan karakter '\0' (NUL)? Kapan Anda menggunakan masing-masing?
+   NULL: Adalah sebuah konsep pointer. Ini adalah nilai spesial untuk sebuah pointer yang berarti "pointer ini tidak menunjuk ke mana pun yang valid".
+   0 (NUL character): Adalah sebuah karakter. Nilai integernya adalah 0, dan ia digunakan sebagai penanda akhir (terminator) dari sebuah string di C.
