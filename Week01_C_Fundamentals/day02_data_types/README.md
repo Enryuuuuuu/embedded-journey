@@ -62,3 +62,5 @@ the content of weather_packet2 data type have a various size of memory like uint
 // 12 | pressure_pascals | 4 byte | Sekarang mulai di alamat 12.
 //---------|-----------------------|---------|------------------------------------
 // UKURAN TOTAL = 16 byte
+
+padding is added with objective to make cpu work in the most efficient way. this is called data alignment, CPU will will able to access memory efficiently when data is aligned. This means a multi-byte variable should be located at a memory address that is a multiple of its own size.
