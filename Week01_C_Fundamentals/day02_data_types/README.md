@@ -33,10 +33,10 @@ Struct and Struct padding
 struct is a data type that allow you to make a group that consist of various type and size of data. for example
 
 struct weather_packet2 {
-uint8_t packet_id;
-float temperature_celsius;
-uint16_t humidity_percent;
-uint32_t pressure_pascals;
+uint8_t packet_id; // 1 byte
+float temperature_celsius; // 4 bytes
+uint16_t humidity_percent; // 2 bytes
+uint32_t pressure_pascals; // 4 bytes
 };
 
 that stuct is consist of a several data size and type like uint8_t,float, uint16_t, and uint32_t. to use struct first we should make the format for out struct. we should define what our struct consist of. next we should make variable using our struct as the data type:
@@ -52,13 +52,13 @@ sensor2.packet_id
 the content of weather_packet2 data type have a various size of memory like uint8_t has 1 bytes, float has 4 bytes etc. if we count the sum of
 the content of weather_packet2 data type have a various size of memory like uint8_t has 1 bytes, float has 4 bytes etc. if we count the sum of the sizes of the individual members of the struct weather_packet2 you will find thatThe sum of the parts is 11 bytes. but in fact the actual size of the struct is 16 bytes because something called padding. here is the detail about that.
 
-// Address | Member | Size | Comment
+// Alamat | Anggota | Ukuran | Penjelasan
 //---------|-----------------------|---------|------------------------------------
-// 0 | packet_id | 2 bytes | OK. Starts at 0.
-// 2 | <--- PADDING ---> | 2 bytes | Compiler adds this to align the next member.
-// 4 | temperature_celsius | 4 bytes | Now starts at address 4 (a multiple of 4).
-// 8 | humidity_percent | 1 byte | OK. Starts at 8.
-// 9 | <--- PADDING ---> | 3 bytes | Compiler adds this to align the next member.
-// 12 | pressure_pascals | 4 bytes | Now starts at address 12 (a multiple of 4).
+// 0 | packet_id | 1 byte | Dimulai di alamat 0.
+// 1 | <--- PADDING ---> | 3 byte | Ditambahkan agar 'float' mulai di kelipatan 4.
+// 4 | temperature_celsius | 4 byte | Sekarang mulai di alamat 4.
+// 8 | humidity_percent | 2 byte | Dimulai di alamat 8.
+// 10 | <--- PADDING ---> | 2 byte | Ditambahkan agar 'uint32_t' mulai di kelipatan 4.
+// 12 | pressure_pascals | 4 byte | Sekarang mulai di alamat 12.
 //---------|-----------------------|---------|------------------------------------
-// TOTAL SIZE = 16 bytes
+// UKURAN TOTAL = 16 byte
