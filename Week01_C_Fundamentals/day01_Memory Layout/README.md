@@ -1,6 +1,8 @@
 SEGMENTASI MEMORI KONPUTER
 Secara Umum memori komputer dibagi menjadi 2 yaitu ROM dan RAM
+
 ROM digunakan untuk menyimpan data yang tidak berubah seperti bahasa mesin hasil kompilasi dari program yang kita buat
+
 sedangkan pada RAM di pecah menjadi beberapa bagian yaitu:
 Data segment: untuk menyimpan variable static atau global yang didefinisikan nilainya (!= 0)
 BSS segement: untuk menyimpan variable static atau global yang tidak didefinisikan nilainya (nilainya akan diisi 0)

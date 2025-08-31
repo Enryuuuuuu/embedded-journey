@@ -1,6 +1,6 @@
 Struct
 
-struct is a data type that allow you to make a group that consist of various type and size of data. for example
+struct is a data type that allows you to create a group that consisting of various type and size of data. for example
 
 struct weather_packet2 {
 uint8_t packet_id; // 1 byte
@@ -9,7 +9,7 @@ uint16_t humidity_percent; // 2 bytes
 uint32_t pressure_pascals; // 4 bytes
 };
 
-that stuct is consist of a several data size and type like uint8_t,float, uint16_t, and uint32_t. to use struct first we should make the format for out struct. we should define what our struct consist of. next we should make variable using our struct as the data type:
+that stuct is consists of a several data size and type like uint8_t,float, uint16_t, and uint32_t. to use struct first we should make the format for out struct. we should define what our struct consist of. next we should make variable using our struct as the data type:
 
 struct weather_packet2 sensor2;
 
@@ -21,7 +21,7 @@ sensor2.packet_id
 
 =============================================================================================================
 
-## Pointer function
+Pointer function
 
 same as variable, function has an address too.
 
