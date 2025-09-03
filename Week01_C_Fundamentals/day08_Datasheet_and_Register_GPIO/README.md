@@ -18,13 +18,13 @@ IO in EPS32 is organized by 2 parts (Digital Output case)
 
 the router:
 
-- IO_MUX: this part responsible for routing pin output(hardware) to the peripheral that available in that pin. if we are using IO_MUX we have limitation that not all pin have some peripheral that directly connected, if the pin has a peripheral that directly connected we can use this peripheral by setting IO_MUX
+- IO_MUX: This component is responsible for routing a pin's output to a peripheral that is available on that specific pin. The IO_MUX has limitations, as not all pins are directly connected to every peripheral. If a pin has a direct connection, we can use it by configuring the IO_MUX
 
-- GPIO Matrix: this part has same responsible with IO_MUX, but in GPIO Matrix we can connect any pin with any peripheral even the pin not directly connected to the peripheral. this give us a flexibilities to built what we want with this esp32 but as a trade off the speed wil decreased.
+- GPIO Matrix: this part has same responsible with IO_MUX, but in GPIO Matrix we can connect any pin with any peripheral even the pin not directly connected to the peripheral. This gives us the flexibility to build what we want, but the trade-off is a slight decrease in speed.
 
 the gate keeper:
 
-- GPIO Register: after we are routing the path which peripheral we will use on a pin using IO_MUX or GPIO Matrix, next we can control the gate before it really connected to the outside world using GPIO Register, in this register we can control the pin to act as an output or input, giving logic HIGH or LOW (if the pin act as an OUTPUT), and controlling how much output do you want to produce.
+- GPIO Register: After routing the path and selecting which peripheral to use with the IO_MUX or GPIO Matrix, we can then control the pin before it connects to the outside world using the GPIO Registers. These registers allow us to configure the pin as an input or output, set the logic level to HIGH or LOW (if configured as an output), and control properties like drive strength." (Note: "how much output" is better described as "drive strength" in technical terms).
 
 for example pin 5 will use for SPI communication:
 
@@ -37,9 +37,9 @@ for example pin 5 will use for SPI communication:
 
 Register to set pin act as an output & input:
 
-- GPIO_ENABLE_REG : this register allow you to set all of pin that available in this register as output or input at once(lot of pin and condition(input or output) in one program)
-- GPIO_ENABLE_W1TS_REG : this register allow you to set only one register to act as output (one pin one program)
-- GPIO_ENABLE_W1TC_REG : this register allow you to set only one register to act as input (one pin one program)
+- GPIO_ENABLE_REG : This register allows you to configure multiple pins as either inputs or outputs in a single operation.(lot of pin and condition(input or output) in one program)
+- GPIO_ENABLE_W1TS_REG : This register allows you to safely set a single pin to act as an output without affecting other pins.(one pin one program)
+- GPIO_ENABLE_W1TC_REG : This register allows you to safely set a single pin to act as an input without affecting other pins.(one pin one program)
 
 ===============================================================
 
