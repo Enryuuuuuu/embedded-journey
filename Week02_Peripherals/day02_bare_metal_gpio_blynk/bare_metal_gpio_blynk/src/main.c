@@ -15,7 +15,7 @@ void app_main(void)
     // 3. Configure the pin as an output
     // Use the ENABLE register and a bitwise operation
     // YOUR CODE HERE
-  GPIO_ENABLE_W1TS_REG_ADDR = GPIO_ENABLE_W1TS_REG_ADDR | (1 << BLINK_GPIO);
+  GPIO_ENABLE_W1TS_REG_ADDR = (1 << BLINK_GPIO);
 
   while(1){
     GPIO_OUT_W1TS_REG_ADDR = (1 << BLINK_GPIO);

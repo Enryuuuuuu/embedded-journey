@@ -75,3 +75,83 @@ int current_power = 500;
     return 0;
 
 }
+
+==============================================================
+
+Key Points to Avoid Build Errors
+
+1. Avoid Deep Folder Structures
+   Do not save your project in a location like D:\Documents\College\Semester_7\Personal_Projects\Embedded\Practice\Week_2\project_name.
+
+Why? Some tools in the toolchain have internal limits on file path length, especially on Windows. An excessively long path can cause a tool to fail when reading or writing files, triggering strange and hard-to-trace errors like the ones we experienced.
+
+Practical Solution: Create a main folder close to the root drive, for example, D:\embedded-projects\, and store all your work there.
+
+2. Avoid Complicated Folder or File Names
+   Do not use spaces, special characters (like &, #, @), or excessively long names for your project folders and files.
+
+Why? Spaces can disrupt scripts running in the terminal, and special characters might have reserved meanings for the operating system. Simple, descriptive names (e.g., snake_case or kebab-case like day09_bare_metal_gpio) are a safe and professional standard.
+
+3. Avoid Rebuilding Over a Failed Build
+   If a build process fails completely (indicated by many red error messages), do not immediately press the 'Build' button again.
+
+Why? A failed build leaves behind "debris" in the form of corrupted temporary files inside the .pio folder. Building on top of this debris is almost guaranteed to fail again in a confusing way.
+
+Practical Solution: Always run the "Clean" command from the PlatformIO menu after a failed build to clear the workspace before attempting to build again.
+
+===================================================================
+
+Understanding Register Interactions: Read-Modify-Write vs. W1TS
+
+When working with microcontrollers, our goal is often to change a single, specific bit within a 32-bit register without disturbing the other 31 bits. There are two primary approaches to accomplish this: a software-based method (Read-Modify-Write) and a hardware-assisted method (W1TS).
+
+## Method 1: Read-Modify-Write (RMW)
+
+This is the classic software-based approach. As the name implies, the process consists of three steps performed by the CPU.
+
+1.  Read: The CPU reads the entire 32-bit value from the target register into a temporary location.
+2.  Modify: The CPU performs a bitwise operation (like OR or AND) on the temporary value to change only the desired bit.
+3.  Write: The CPU writes the entire modified 32-bit value back to the target register.
+
+Example Code:
+// Setting the 5th bit using RMW
+GPIO_OUT_REG = GPIO_OUT_REG | (1 << 5);
+
+Analogy: Editing a Whiteboard
+Imagine a register is a shared whiteboard. The RMW process is as follows:
+
+1.  You take a photograph of the entire whiteboard (Read).
+2.  You go back to your desk to edit the photograph (Modify).
+3.  You return to the whiteboard, completely erase its contents, and then rewrite everything exactly as shown in your edited photograph (Write).
+
+Main Risk: Race Condition
+The biggest drawback of RMW is that it is not atomic. There is a time gap between the "Read" and "Write" steps. If another process (like an interrupt) changes the whiteboard while you are at your desk editing the photo, the changes from that process will be lost when you rewrite the entire board. This is called a Race Condition.
+
+## Method 2: W1TS (Write 1 to Set) Registers
+
+Microcontroller chip designers are aware of the risks of RMW. Therefore, they provide special hardware features to simplify this process. A W1TS register is one such feature.
+
+- W1TS stands for "Write 1 to Set". This means any bit you write a 1 to will be set (become HIGH), and any bit you write a 0 to will be ignored by the hardware.
+- W1TC stands for "Write 1 to Clear". Any bit you write a 1 to will be cleared (become LOW).
+
+This process consists of only a single step.
+
+Example Code:
+// Setting the 5th bit using a W1TS register
+GPIO_OUT_W1TS_REG = (1 << 5);
+
+Analogy: Magic Light Switches
+Using a W1TS register is like having a panel with magic switches. You don't need to check the status of the other switches. You simply give the command: "Turn on light number 5!" The hardware handles the rest instantly without disturbing any other lights.
+
+Key Advantage: Atomic Operation
+This operation is atomic—it occurs in a single, uninterruptible instruction cycle. This is inherently safe from race conditions and is also faster because it involves only a single write operation.
+
+## Comparison Table
+
+| Feature            | Read-Modify-Write (RMW)                | W1TS / W1TC                                |
+| ------------------ | -------------------------------------- | ------------------------------------------ |
+| Basis of Operation | Software-based                         | Hardware-assisted                          |
+| Number of Steps    | 3 (Read, Modify, Write)                | 1 (Write)                                  |
+| Operation Type     | Non-Atomic                             | Atomic                                     |
+| Risk               | Prone to Race Conditions               | Immune to Race Conditions                  |
+| When to Use        | When no hardware feature is available. | When available, this is the best practice. |
